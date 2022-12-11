@@ -1,3 +1,2 @@
 puts 'It is my first commit!!!'
-
-puts 'Майоров Михаил'
+puts 'My first pool'
