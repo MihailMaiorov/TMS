@@ -11,3 +11,4 @@ loop do
     puts "Color is #{color[0]}"
   end
 end
+
