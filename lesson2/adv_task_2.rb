@@ -1,46 +1,60 @@
 puts "Добро пожаловать в Американскую рулетку! \nВведите свое имя:"
 name = gets.strip
 money = 100.00
+contin_game = %w[y n]
 all_color = %w[red black green]
 
 until money.zero?
   puts "#{name} Ваш стек равен #{money}"
-  rand_color = rand(1..38)
+  puts 'Желаете сделать ставку? (y/n)'
+  game = gets.strip[0]
 
-  if rand_color.between?(1, 18)
-    color = 'black'
-  elsif rand_color.between?(19, 36)
-    color = 'red'
-  else
-    color = 'green'
+  until contin_game.include?(game)
+    puts 'Некорректный ответ. Введите (y/n)'
+    game = gets.strip[0]
   end
 
-  puts 'Выберите цвет: (black, red, green)'
-  user_color = gets.strip
+  if game == 'y'
 
-  until all_color.include?(user_color)
-    puts 'Неверный цвет'
+    rand_color = rand(1..38)
+
+    if rand_color.between?(1, 18)
+      color = 'black'
+    elsif rand_color.between?(19, 36)
+      color = 'red'
+    else
+      color = 'green'
+    end
+
     puts 'Выберите цвет: (black, red, green)'
     user_color = gets.strip
-  end
 
-  puts 'Сделайте ставку'
-  bet = gets.to_f
+    until all_color.include?(user_color)
+      puts 'Некорректный цвет. (black, red, green)'
+      user_color = gets.strip
+    end
 
-  while bet > money
-    puts "Недостаточно денег (стек равен #{money})"
     puts 'Сделайте ставку'
     bet = gets.to_f
-  end
 
-  money -= bet
-  puts "Ставки сделаны, ставок больше нет!\nВыпал: #{color}"
-  color == 'green' ? value = bet * 36 : value = bet * 2
+    while bet > money
+      puts "Недостаточно средств (стек равен #{money})"
+      bet = gets.to_f
+    end
 
-  if user_color == color
-    puts 'Вы выиграли!!!'
-    money += value
+    money -= bet
+    puts "Ставки сделаны, ставок больше нет!\nВыпал: #{color}"
+    color == 'green' ? value = bet * 36 : value = bet * 2
+
+    if user_color == color
+      puts "Вы выиграли #{value}!!!"
+      money += value
+    else
+      puts 'Вы проиграли.'
+    end
+
   else
-    puts 'Вы проиграли.'
+    puts "Спасибо за игру. Ваш стек равен #{money}"
+    break
   end
 end
