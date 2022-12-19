@@ -4,19 +4,19 @@
 # 4. обновляем количество попыток
 
 MIN = 0
-MAX = 100000000000000000000000000000000000000000000000000000000000000000000000000000000000
+MAX = 100_000_000_000_000_000_000_000_000
 MAX_TRIES = 7
-INPUT_EQUEL = 'Вы выиграли!'
-INPUT_LOWER = 'Ваше число меньше загаданного!'
-INPUT_HIGER = 'Ваше число больше загаданного!'
+INPUT_EQUEL = 'Вы выиграли!'.freeze
+INPUT_LOWER = 'Ваше число меньше загаданного!'.freeze
+INPUT_HIGER = 'Ваше число больше загаданного!'.freeze
 
-def right_guess?(users_guess, secret_number, _lower_bound, _upper_bound)
+def right_guess?(users_guess, secret_number)
   if users_guess == secret_number
-    return INPUT_EQUEL
+    INPUT_EQUEL
   elsif users_guess < secret_number
-    return INPUT_LOWER
+    INPUT_LOWER
   elsif users_guess > secret_number
-    return INPUT_HIGER
+    INPUT_HIGER
   end
 end
 
@@ -26,15 +26,16 @@ lower_bound = MIN
 upper_bound = MAX
 
 loop do
-  guess_result = right_guess?(current_guess, secret_number, lower_bound, upper_bound)
+  guess_result = right_guess?(current_guess, secret_number)
 
-  if guess_result == INPUT_EQUEL
+  case guess_result
+  when INPUT_EQUEL
     puts "Победа! #{secret_number}"
     break
-  elsif guess_result == INPUT_LOWER
+  when INPUT_LOWER
     lower_bound = current_guess
     current_guess += ((upper_bound - current_guess) / 2.0).round
-  elsif guess_result == INPUT_HIGER
+  when INPUT_HIGER
     upper_bound = current_guess
     current_guess -= ((current_guess - lower_bound) / 2.0).round
   end
