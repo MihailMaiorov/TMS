@@ -1,10 +1,14 @@
 # Заполнить хеш гласными буквами,
 # где значением будет являтся порядковый номер буквы в алфавите (a - 1).
 
-letters_index = {}
+vowel_index = {}
+vowel_letters = %w[a e i o u y]
 
-('a'..'z').each_with_index { |letter, index| letters_index[letter] = index + 1 }
+('a'..'z').each_with_index do |letter, index|
+  if vowel_letters.include?(letter)
+    vowel_index[letter] = index + 1
+    next
+  end
+end
 
-vowel_letters = letters_index.select { |letter| %w[a e i o u y].include?(letter) }
-
-puts vowel_letters
+puts vowel_index
