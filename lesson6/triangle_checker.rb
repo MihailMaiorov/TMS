@@ -15,18 +15,18 @@ class TriangleChecker
     @side_c = side_c
   end
 
-  def is_triangle?
-    if side_a.to_i != side_a || side_b.to_i != side_b || side_c.to_i != side_c
-      puts 'Нужно вводить только числа!'
+  def triangle?
+    if side_a.class != Integer || side_b.class != Integer || side_c.class != Integer
+      puts 'You only need to enter numbers!'
     elsif side_a.negative? || side_b.negative? || side_c.negative?
-      puts 'С отрицательными числами ничего не выйдет!'
+      puts 'Nothing will work with negative numbers!'
     elsif side_a + side_b > side_c && side_b + side_c > side_a && side_a + side_c > side_b
-      puts 'Ура, можно построить треугольник!'
+      puts 'Hooray, you can build a triangle!'
     else
-      puts 'Жаль, но из этого треугольник не сделать.'
+      puts "It's a pity, but you can't make a triangle out of this."
     end
   end
 end
 
 triangle = TriangleChecker.new('s', 2, 3)
-triangle.is_triangle?
+triangle.triangle?
