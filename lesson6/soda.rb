@@ -18,6 +18,3 @@ class Soda
     end
   end
 end
-
-b = Soda.new('Milk')
-b.show_my_drink

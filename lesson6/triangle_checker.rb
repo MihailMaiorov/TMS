@@ -16,17 +16,14 @@ class TriangleChecker
   end
 
   def triangle?
-    if side_a.class != Integer || side_b.class != Integer || side_c.class != Integer
-      puts 'You only need to enter numbers!'
-    elsif side_a.negative? || side_b.negative? || side_c.negative?
-      puts 'Nothing will work with negative numbers!'
+    return 'You only need to enter numbers!' unless [side_a, side_b, side_c].all?(Numeric)
+
+    if side_a.negative? || side_b.negative? || side_c.negative?
+      'Nothing will work with negative numbers!'
     elsif side_a + side_b > side_c && side_b + side_c > side_a && side_a + side_c > side_b
-      puts 'Hooray, you can build a triangle!'
+      'Hooray, you can build a triangle!'
     else
-      puts "It's a pity, but you can't make a triangle out of this."
+      "It's a pity, but you can't make a triangle out of this."
     end
   end
 end
-
-triangle = TriangleChecker.new('s', 2, 3)
-triangle.triangle?
