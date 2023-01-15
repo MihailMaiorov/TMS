@@ -42,7 +42,7 @@ end
 
 class Square < Rectangle
   def initialize(side_a)
-    super(side_a)
+    super
     @side_b = side_a
   end
 end
