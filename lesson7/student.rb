@@ -31,7 +31,3 @@ class Student < User
     puts "Current course: #{current_course}"
   end
 end
-
-a = Student.new('Mihail', 'Maiorov', 2022)
-a.full_name
-a.course

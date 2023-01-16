@@ -58,16 +58,3 @@ class Triangle < Figure
     side_a + side_b + side_c
   end
 end
-
-a = Rectangle.new(1, 2)
-p a.side_a
-p a.side_b
-t = Triangle.new(1, 1, 1)
-p t.area
-p t.perimeter
-s = Square.new(2)
-p s.perimeter
-p s.area
-c = Circle.new(3)
-p c.area
-p c.perimeter
