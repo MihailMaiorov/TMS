@@ -33,10 +33,13 @@ class Array
     selected_items
   end
 
-  def sum
-    results = 0
+  def sum(results = 0)
     self.each do |item|
-      results += yield(item)
+      if block_given?
+        results += yield(item)
+      else
+        results += item
+      end
     end
     results
   end
@@ -52,3 +55,5 @@ arr3 = arr.map { |x| x / 2.0 }
 p arr3
 arr4 = arr.sum { |x| x * 2 }
 p arr4
+p arr.sum
+p arr.sum(2)
