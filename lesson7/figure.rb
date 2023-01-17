@@ -22,7 +22,7 @@ class Circle < Figure
   end
 
   def area
-    PI * radius ** 2
+    PI * radius**2
   end
 
   def perimeter

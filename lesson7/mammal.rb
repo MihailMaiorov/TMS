@@ -7,7 +7,7 @@ class Mammal
   end
 
   def introduce
-    puts "#{name} is #{age} years old #{self.class::CLASS}"
+    puts "#{name} is #{age} years old #{self.class.to_s}"
   end
 
   def breed
@@ -22,8 +22,6 @@ class Mammal
 end
 
 class Cat < Mammal
-  CLASS = 'Cat'
-
   def speak
     puts 'MEOW'
   end
@@ -34,8 +32,6 @@ class Cat < Mammal
 end
 
 class Dog < Mammal
-  CLASS = 'Dog'
-
   def speak
     puts 'WOOF'
   end
@@ -46,8 +42,6 @@ class Dog < Mammal
 end
 
 class Horse < Mammal
-  CLASS = 'Horse'
-
   def speak
     puts 'EEEE'
   end
@@ -58,8 +52,6 @@ class Horse < Mammal
 end
 
 class Elephant < Mammal
-  CLASS = 'Elephant'
-
   def speak
     puts 'UUUU'
   end
