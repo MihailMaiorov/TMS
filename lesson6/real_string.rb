@@ -19,14 +19,21 @@ class RealString
     @string = string
   end
 
+  def size
+    string.size
+  end
+
   def <=>(other)
-    string.size <=> other.string.size
+    string.size <=> other.size
   end
 end
 
 str6 = RealString.new('asdfaa')
 str1 = RealString.new('a')
 hash2 = RealString.new({ a: 1, b: 2 })
+str3 = String.new('qwe')
 
+p str6 > 'asas'
 p str6 == str1
 p hash2 > str1
+p str3 > str1

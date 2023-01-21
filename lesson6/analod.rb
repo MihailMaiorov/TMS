@@ -1,6 +1,6 @@
 # Создать свой аналог класса Array, String, Hash (на выбор).
 
-class Array
+class MyArray < Array
   def each
     index = 0
     while index < self.size
@@ -43,9 +43,30 @@ class Array
     end
     results
   end
+
+  def size
+    index = 0
+    arr_size = 0
+    until self[index].nil?
+      index += 1
+      arr_size += 1
+    end
+    arr_size
+  end
+
+  def include?(arg)
+    self.each { |item| return true if arg == item }
+
+    false
+  end
+
+  def empty?
+    self.size.zero?
+  end
 end
 
-arr = Array.new([1, 2, 3])
+arr = MyArray.new([1, 2, 3, 4])
+p arr.size
 arr.each { |x| puts x * 2 }
 arr1 = arr.reject { |x| x > 2 }
 p arr1
@@ -57,3 +78,9 @@ arr4 = arr.sum { |x| x * 2 }
 p arr4
 p arr.sum
 p arr.sum(2)
+p (1..5).sum
+p arr.include?(4)
+p arr.empty?
+array = MyArray.new
+p array.empty?
+p MyArray.ancestors
