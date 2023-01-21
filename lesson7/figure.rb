@@ -13,8 +13,6 @@ class Figure
 end
 
 class Circle < Figure
-  PI = 3.14159265359
-
   attr_reader :radius
 
   def initialize(radius)
@@ -22,11 +20,11 @@ class Circle < Figure
   end
 
   def area
-    PI * radius**2
+    Math::PI * radius**2
   end
 
   def perimeter
-    PI * radius * 2
+    Math::PI * radius * 2
   end
 end
 
