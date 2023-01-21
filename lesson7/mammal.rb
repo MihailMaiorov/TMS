@@ -7,7 +7,7 @@ class Mammal
   end
 
   def introduce
-    puts "#{name} is #{age} years old #{self.class.to_s}"
+    puts "#{name} is #{age} years old #{self.class}"
   end
 
   def breed
