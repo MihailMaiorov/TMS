@@ -47,7 +47,7 @@ class MyArray < Array
   def size
     index = 0
     arr_size = 0
-    until self[index].nil?
+    until self[index..] == []
       index += 1
       arr_size += 1
     end
@@ -65,22 +65,30 @@ class MyArray < Array
   end
 end
 
-arr = MyArray.new([1, 2, 3, 4])
-p arr.size
-arr.each { |x| puts x * 2 }
-arr1 = arr.reject { |x| x > 2 }
-p arr1
-arr2 = arr.select { |x| x > 2 }
-p arr2
-arr3 = arr.map { |x| x / 2.0 }
-p arr3
-arr4 = arr.sum { |x| x * 2 }
-p arr4
-p arr.sum
-p arr.sum(2)
+array4 = MyArray.new([1, 2, 3, 4])
+array = MyArray.new([nil])
+p array4.size
+
+array4.each { |x| puts x * 2 }
+
+p(array4.reject { |x| x > 2 })
+
+p(array4.select { |x| x > 2 })
+
+p(array4.map { |x| x / 2.0 })
+
+p(array4.sum { |x| x * 2 })
+
+p array4.sum
+
+p array4.sum(2)
+
 p (1..5).sum
-p arr.include?(4)
-p arr.empty?
-array = MyArray.new
+
+p array4.include?(4)
+
+p array4.empty?
+
 p array.empty?
+
 p MyArray.ancestors
