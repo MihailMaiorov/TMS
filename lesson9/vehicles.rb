@@ -37,17 +37,12 @@ module Vehicles
       puts 'Left turn'
     end
 
-    # def full_info
-    #   puts "Driver: #{driver.full_name}, driving experience: #{driver.driving_experience}"
-    #   puts "Engine: #{engine.manufacturer}, power: #{engine.power}"
-    #   puts "#{self.class}: #{@params}"
-    # end
-
-    def full_info(otions)
-      params.each do |k, v|
-      
-        puts "#{k}: #{v}"
-      end
+    def full_info
+      puts "car_model: #{car_model}"
+      puts "car_class: #{car_class}"
+      puts "weight: #{weight}"
+      puts "Driver: #{driver.full_name}, driving experience: #{driver.driving_experience}"
+      puts "Engine: #{engine.manufacturer}, power: #{engine.power}"
     end
   end
 end
@@ -60,7 +55,6 @@ module Professions
       @power = power
       @manufacturer = manufacturer
     end
-
   end
 end
 
@@ -71,6 +65,11 @@ class Lorry < Vehicles::Car
     super
     @body_load_capacity = params[:body_load_capacity]
   end
+
+  def full_info
+    puts "body load capacity: #{body_load_capacity}"
+    super
+  end
 end
 
 class SportCar < Vehicles::Car
@@ -79,6 +78,11 @@ class SportCar < Vehicles::Car
   def initialize(params)
     super
     @max_speed = params[:max_speed]
+  end
+
+  def full_info
+    puts "max speed: #{max_speed}"
+    super
   end
 end
 
@@ -89,24 +93,36 @@ class Driver
     @full_name = full_name
     @driving_experience = driving_experience
   end
-
 end
 
 class Person < Driver; end
 
-vasia = Driver.new('Vasiliy Alibabaevich', 8)
-m62 = Professions::Engine.new(286, 'BMW')
-# p bmwe38 = Vehicles::Car.new('BMW', 'e38', 2000, vasia, m62)
+nikolay = Driver.new('Nikolay Ivanov', 10)
+vasiliy = Driver.new('Vasiliy Alibabaevich', 8)
+
 lorry_engin = Professions::Engine.new(350, 'Mersedes')
+sport_engin = Professions::Engine.new(500, 'Ferrari')
+
+ferrari = SportCar.new(
+  {
+    car_model: 'Ferrari',
+    car_class: 'F40',
+    weight: 1200,
+    driver: nikolay,
+    engine: sport_engin,
+    max_speed: 310
+  }
+)
 actros = Lorry.new(
   {
     car_model: 'Mersedes',
     car_class: 'Actros',
     weight: 5500,
-    driver: vasia,
+    driver: vasiliy,
     engine: lorry_engin,
     body_load_capacity: 20_000
   }
 )
-# binding.irb
+
+ferrari.full_info
 actros.full_info
