@@ -38,11 +38,11 @@ module Vehicles
     end
 
     def full_info
+      puts "\nDriver: #{driver.full_name}, driving experience: #{driver.driving_experience}"
+      puts "Engine: #{engine.manufacturer}, power: #{engine.power}"
       puts "car_model: #{car_model}"
       puts "car_class: #{car_class}"
       puts "weight: #{weight}"
-      puts "Driver: #{driver.full_name}, driving experience: #{driver.driving_experience}"
-      puts "Engine: #{engine.manufacturer}, power: #{engine.power}"
     end
   end
 end
@@ -67,8 +67,8 @@ class Lorry < Vehicles::Car
   end
 
   def full_info
-    puts "body load capacity: #{body_load_capacity}"
     super
+    puts "body load capacity: #{body_load_capacity}"
   end
 end
 
@@ -81,8 +81,8 @@ class SportCar < Vehicles::Car
   end
 
   def full_info
-    puts "max speed: #{max_speed}"
     super
+    puts "max speed: #{max_speed}"
   end
 end
 
