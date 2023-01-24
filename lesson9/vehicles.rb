@@ -15,7 +15,6 @@ module Vehicles
     attr_reader :car_model, :car_class, :weight, :driver, :engine, :params
 
     def initialize(params)
-      @params = params
       params.each do |name, value|
         self.instance_variable_set("@#{name}", value)
       end
