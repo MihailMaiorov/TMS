@@ -12,7 +12,7 @@ class NumberChecker
       number = Integer(gets.strip)
       puts "#{number} is the number!"
     rescue ArgumentError => e
-      puts e
+      puts e.message
       retry_count += 1
       retry if retry_count < MAX_RETRY
       puts 'Gotta learn the numbers!!!'
@@ -20,5 +20,5 @@ class NumberChecker
   end
 end
 
-a = NumberChecker.new
-a.check
+checker = NumberChecker.new
+checker.check
