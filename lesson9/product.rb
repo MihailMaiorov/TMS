@@ -20,55 +20,83 @@ end
 class Category
   attr_reader :category, :products
 
-  def initialize(category, *products)
+  def initialize(category)
     @category = category
-    @products = products
+    @products ||= {}
+  end
+
+  def add(new_product)
+    products[new_product] = { title: new_product.title, price: new_product.price, rating: new_product.rating }
+  end
+
+  def add_all(*new_products)
+    new_products.each do |product|
+      products[product] = { title: product.title, price: product.price, rating: product.rating }
+    end
+  end
+
+  def info
+    products.values.join(', ')
   end
 
   def catalog
-    puts "#{category}: #{products.map(&:title).join(', ')}"
+    puts "#{category}: #{info}"
   end
 end
 
 class Basket
-  attr_reader :purchased_product
+  attr_reader :products
 
-  def initialize(*purchased_product)
-    @purchased_product = purchased_product
+  def initialize
+    @products = {}
+  end
+
+  def info
+    products.values.join(', ')
   end
 end
 
 class User
   attr_reader :login, :password, :basket
 
-  def initialize(login, password, basket)
+  def initialize(login, password)
     @login = login
     @password = password
-    @basket = basket
+    @basket ||= Basket.new
+  end
+
+  def add_product(added_product)
+    basket.products[added_product] = { title: added_product.title, price: added_product.price, rating: added_product.rating }
+  end
+
+  def add_all_products(*added_products)
+    added_products.each do |product|
+      basket.products[product] = { title: product.title, price: product.price, rating: product.rating }
+    end
   end
 
   def purchases
-    product_titles = []
-
-    basket.purchased_product.each { |product| product_titles << product.title }
-
-    puts "#{login} bought: #{product_titles.join(', ')}"
+    puts "#{login} bought: #{basket.info}"
   end
 end
 
-milk = Product.new('milk', 2, 5)
-kefir = Product.new('kefir', 2.3, 5)
-meat = Product.new('meat', 10, 4)
-sausage = Product.new('sausage', 6, 3)
+milk = Product.new('Milk', 2, 5)
+kefir = Product.new('Kefir', 2.3, 5)
+meat = Product.new('Meat', 10, 4)
+meat1 = Product.new('Meat', 20, 8)
+sausage = Product.new('Sausage', 6, 3)
 
-milk_products = Category.new('milk products', milk, kefir)
-meat_products = Category.new('meat products', meat, sausage)
+milk_products = Category.new('Milk products')
+meat_products = Category.new('Meat products')
+milk_products.add(milk)
+milk_products.add(kefir)
+meat_products.add_all(meat, sausage, meat1)
 
-basket = Basket.new(milk, meat)
-basket2 = Basket.new(kefir, sausage)
-
-alesha = User.new('deflorator2009', 1111, basket)
-vasia = User.new('lopatakopaet', 2222, basket2)
+alesha = User.new('Alex', 1111)
+vasia = User.new('Max', 2222)
+alesha.add_product(milk)
+alesha.add_product(kefir)
+vasia.add_all_products(meat1, sausage, meat)
 
 milk_products.catalog
 meat_products.catalog
