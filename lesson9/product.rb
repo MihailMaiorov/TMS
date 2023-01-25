@@ -22,7 +22,7 @@ class Category
 
   def initialize(category)
     @category = category
-    @products ||= {}
+    @products = {}
   end
 
   def add(new_product)
@@ -62,7 +62,8 @@ class User
   def initialize(login, password)
     @login = login
     @password = password
-    @basket ||= Basket.new
+    @basket = Basket.new
+    @user_info = login
   end
 
   def add_product(added_product)
