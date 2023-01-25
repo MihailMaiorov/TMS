@@ -44,9 +44,37 @@ module Vehicles
       puts "weight: #{weight}"
     end
   end
+
+  class Lorry < Car
+    attr_reader :body_load_capacity
+
+    def initialize(params)
+      super
+      @body_load_capacity = params[:body_load_capacity]
+    end
+
+    def full_info
+      super
+      puts "body load capacity: #{body_load_capacity}"
+    end
+  end
+
+  class SportCar < Car
+    attr_reader :max_speed
+
+    def initialize(params)
+      super
+      @max_speed = params[:max_speed]
+    end
+
+    def full_info
+      super
+      puts "max speed: #{max_speed}"
+    end
+  end
 end
 
-module Professions
+module PowerUnit
   class Engine
     attr_reader :power, :manufacturer
 
@@ -54,34 +82,6 @@ module Professions
       @power = power
       @manufacturer = manufacturer
     end
-  end
-end
-
-class Lorry < Vehicles::Car
-  attr_reader :body_load_capacity
-
-  def initialize(params)
-    super
-    @body_load_capacity = params[:body_load_capacity]
-  end
-
-  def full_info
-    super
-    puts "body load capacity: #{body_load_capacity}"
-  end
-end
-
-class SportCar < Vehicles::Car
-  attr_reader :max_speed
-
-  def initialize(params)
-    super
-    @max_speed = params[:max_speed]
-  end
-
-  def full_info
-    super
-    puts "max speed: #{max_speed}"
   end
 end
 
@@ -99,10 +99,10 @@ class Person < Driver; end
 nikolay = Driver.new('Nikolay Ivanov', 10)
 vasiliy = Driver.new('Vasiliy Alibabaevich', 8)
 
-lorry_engin = Professions::Engine.new(350, 'Mersedes')
-sport_engin = Professions::Engine.new(500, 'Ferrari')
+lorry_engin = PowerUnit::Engine.new(350, 'Mersedes')
+sport_engin = PowerUnit::Engine.new(500, 'Ferrari')
 
-ferrari = SportCar.new(
+ferrari = Vehicles::SportCar.new(
   {
     car_model: 'Ferrari',
     car_class: 'F40',
@@ -112,7 +112,7 @@ ferrari = SportCar.new(
     max_speed: 310
   }
 )
-actros = Lorry.new(
+actros = Vehicles::Lorry.new(
   {
     car_model: 'Mersedes',
     car_class: 'Actros',
