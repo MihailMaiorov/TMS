@@ -63,7 +63,6 @@ class User
     @login = login
     @password = password
     @basket = Basket.new
-    @user_info = login
   end
 
   def add_product(added_product)
