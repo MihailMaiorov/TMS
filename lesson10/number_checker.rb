@@ -4,7 +4,7 @@
 class NumberChecker
   MAX_RETRY = 5
 
-  def check
+  def self.check
     retry_count = 0
 
     begin
@@ -20,5 +20,5 @@ class NumberChecker
   end
 end
 
-checker = NumberChecker.new
-checker.check
+NumberChecker.check
+
