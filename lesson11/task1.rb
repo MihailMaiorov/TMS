@@ -22,12 +22,12 @@ class MyValididator
   end
 
   def check_password
-    PasswordChecker.check_password(welcome_msg: 'Enter your password: ',
+    PasswordChecker.check(welcome_msg: 'Enter your password: ',
                                    validator: ->(value) { value.match?(PASSWORD_VALIDATE) })
   end
 
   def confirm_password
-    PasswordChecker.confirm_password(welcome_msg: 'Confirm your password: ',
+    PasswordChecker.confirm(welcome_msg: 'Confirm your password: ',
                                      validator: ->(value) { value == password })
   end
 
@@ -62,7 +62,7 @@ end
 
 class PasswordChecker
   class << self
-    def check_password(welcome_msg:, validator:)
+    def check(welcome_msg:, validator:)
       print welcome_msg
       value = gets.strip
       raise MyValididator::WrongPasswordException.valid_error unless validator.call(value)
@@ -70,7 +70,7 @@ class PasswordChecker
       value
     end
 
-    def confirm_password(welcome_msg:, validator:)
+    def confirm(welcome_msg:, validator:)
       print welcome_msg
       value = gets.strip
       raise MyValididator::WrongPasswordException.confirm_error unless validator.call(value)
