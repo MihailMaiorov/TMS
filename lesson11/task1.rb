@@ -23,12 +23,12 @@ class MyValididator
 
   def check_password
     PasswordChecker.check(welcome_msg: 'Enter your password: ',
-                                   validator: ->(value) { value.match?(PASSWORD_VALIDATE) })
+                          validator: ->(value) { value.match?(PASSWORD_VALIDATE) })
   end
 
   def confirm_password
     PasswordChecker.confirm(welcome_msg: 'Confirm your password: ',
-                                     validator: ->(value) { value == password })
+                            validator: ->(value) { value == password })
   end
 
   class WrongLoginException < StandardError
