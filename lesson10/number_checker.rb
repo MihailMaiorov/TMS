@@ -2,23 +2,18 @@
 # Если подаётся что-то вместо числа - вызывать исключение и в обработке вывести, что было подано.
 
 class NumberChecker
-  MAX_RETRY = 5
+  NUMBER_VALIDATE = /\A\d+\.?\d*\z/.freeze
 
   def self.check
-    retry_count = 0
+    print 'Enter a number: '
+    number = gets.strip
 
-    begin
-      print 'Enter a number: '
-      number = Integer(gets.strip)
-      puts "#{number} is the number!"
-    rescue ArgumentError => e
-      puts e.message
-      retry_count += 1
-      retry if retry_count < MAX_RETRY
-      puts 'Gotta learn the numbers!!!'
-    end
+    raise NumberError, "'#{number}' is not a number" unless number.match?(NUMBER_VALIDATE)
+
+    puts "#{number} is the number!"
   end
+
+  class NumberError < StandardError; end
 end
 
 NumberChecker.check
-
