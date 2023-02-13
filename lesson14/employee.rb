@@ -1,17 +1,15 @@
 require 'csv'
-require_relative 'parser'
+require_relative 'processing_csv'
 
 class Employee
-  include Parser
+  include ProcessingCSV
 
   def salary
     processed_data.map { |employee| employee[:rate] * employee[:hours_worked] }
   end
 
   def add
-    CSV.open(file_path, 'a', headers: true) do |csv|
-      csv << user_input
-    end
+    writer(user_input)
 
     puts 'New employee successfully added'
   end
@@ -32,9 +30,5 @@ class Employee
     print 'Enter experience: '
     experience = gets.to_i
     [name, surname, job_position, rate, hours_worked, experience]
-  end
-
-  def file_path
-    'staff.csv'
   end
 end
