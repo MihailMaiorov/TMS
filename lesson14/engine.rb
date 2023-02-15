@@ -16,8 +16,8 @@ class Engine
   end
 
   def intro_level
-    puts '1. Show all employees, 2. Sort employees, 3. Add employee, 4. Quit'
-    puts 'Enter a number(1, 2, 3, 4)'
+    puts '1. Show all employees, 2. Sort employees, 3. Add employee, 4. Calculate salary, 5. Quit'
+    puts 'Enter a number(1, 2, 3, 4, 5)'
 
     user_input = gets.to_i
 
@@ -29,6 +29,8 @@ class Engine
     when 3
       @employee.add
     when 4
+      puts @employee.calculate_salary
+    when 5
       exit
     end
   end
@@ -36,55 +38,54 @@ class Engine
   def sort_level
     puts 'How to sort?(1. first name, 2. last name, 3. job position, 4. rate, 5. hours worked, 6. experience, 7. Back)'
 
-    user_input2 = gets.to_i
+    user_input = gets.to_i
+    sort_param =
+      case user_input
+      when 1
+        :first_name
+      when 2
+        :last_name
+      when 3
+        :job_position
+      when 4
+        :rate
+      when 5
+        :hours_worked
+      when 6
+        :experience
+      when 7
+        :intro_level
+      end
 
-    case user_input2
-    when 1
-      puts @sorter.sortered_by_first_name
-      select_level
-    when 2
-      puts @sorter.sortered_by_last_name
-      select_level
-    when 3
-      puts @sorter.sortered_by_job_position
-      select_level
-    when 4
-      puts @sorter.sortered_by_rate
-      select_level
-    when 5
-      puts @sorter.sortered_by_hours_worked
-      select_level
-    when 6
-      puts @sorter.sortered_by_experience
-      select_level
-    when 7
-      intro_level
-    end
+    return intro_level if sort_param == :intro_level
+
+    puts @sorter.sorter(sort_param)
+    select_level
   end
 
   def select_level
     puts '1. select employeer, 2. Back'
 
-    user_input3 = gets.to_i
+    user_input = gets.to_i
 
-    case user_input3
+    case user_input
     when 1
       @selector.select_by_last_name
       puts @selector.employee
-      edit_level
+      profile_level
     when 2
       sort_level
     end
   end
 
-  def edit_level
+  def profile_level
     puts '1. edit employee, 2. fire employee, 3. Back'
 
-    user_input4 = gets.to_i
+    user_input = gets.to_i
 
-    case user_input4
+    case user_input
     when 1
-      puts @selector.employee
+      edit_level
     when 2
       @editor.fire(@selector.employee[:last_name])
       intro_level
@@ -93,10 +94,37 @@ class Engine
     end
   end
 
+  def edit_level
+    puts 'What to edit?(1. first name, 2. last name, 3. job position, 4. rate, 5. hours worked, 6. experience, 7. Back)'
+
+    user_input = gets.to_i
+
+    edit_param =
+      case user_input
+      when 1
+        :first_name
+      when 2
+        :last_name
+      when 3
+        :job_position
+      when 4
+        :rate
+      when 5
+        :hours_worked
+      when 6
+        :experience
+      when 7
+        :profile_level
+      end
+
+    return profile_level if edit_param == :profile_level
+
+    @editor.edit(@selector.employee, edit_param)
+    profile_level
+  end
+
   def runner
     puts 'You launched the payroll application. v.1.0'
     intro_level
   end
 end
-
-Engine.new.runner

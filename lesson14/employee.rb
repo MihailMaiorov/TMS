@@ -4,8 +4,8 @@ require_relative 'processing_csv'
 class Employee
   include ProcessingCSV
 
-  def salary
-    processed_data.map { |employee| employee[:rate] * employee[:hours_worked] }
+  def calculate_salary
+    processed_data.each { |employee| employee[:salary] = employee[:rate] * employee[:hours_worked] }
   end
 
   def add
