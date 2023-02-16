@@ -23,7 +23,7 @@ class Engine
 
     case user_input
     when 1
-      Engine.new.reader
+      Engine.new.csv_read
     when 2
       sort_level
     when 3
@@ -33,9 +33,9 @@ class Engine
     when 5
       exit
     else
-      raise WrongOptionSelect
+      raise WrongOptionSelectError
     end
-  rescue WrongOptionSelect => e
+  rescue WrongOptionSelectError => e
     puts e.message
     retry
   end
@@ -61,12 +61,12 @@ class Engine
       when 7
         return intro_level
       else
-        raise WrongOptionSelect
+        raise WrongOptionSelectError
       end
 
     puts @sorter.sorter(sort_param)
     select_level
-  rescue WrongOptionSelect => e
+  rescue WrongOptionSelectError => e
     puts e.message
     retry
   end
@@ -132,13 +132,17 @@ class Engine
       when 6
         :experience
       when 7
-        :profile_level
+        return profile_level
+      else
+        raise WrongOptionSelectError
       end
-
-    return profile_level if edit_param == :profile_level
 
     @editor.edit(@selector.employee, edit_param)
     profile_level
+
+  rescue WrongOptionSelectError => e
+    puts e.message
+    retry
   end
 
   def runner

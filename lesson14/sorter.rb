@@ -5,6 +5,6 @@ class Sorter
   include ProcessingCSV
 
   def sorter(param)
-    processed_data.sort_by { |employee| employee[param].downcase }
+    processed_data.sort_by { |employee| employee[param] }
   end
 end

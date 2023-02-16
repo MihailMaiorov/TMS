@@ -9,7 +9,7 @@ class Employee
   end
 
   def add
-    writer(user_input)
+    csv_write(user_input)
 
     puts 'New employee successfully added'
   end
@@ -18,11 +18,11 @@ class Employee
 
   def user_input
     print 'Enter name: '
-    name = gets.strip
+    name = gets.strip.capitalize
     print 'Enter surname: '
-    surname = gets.strip
+    surname = gets.strip.capitalize
     print 'Enter job position: '
-    job_position = gets.strip
+    job_position = gets.strip.downcase
     print 'Enter rate: '
     rate = gets.to_i
     print 'Enter hours worked: '

@@ -8,13 +8,13 @@ class Editor
     print "Enter new #{header}: "
     new_value = gets.strip
 
-    editor(header, employee[:last_name], new_value)
+    csv_edit(header, employee[:last_name], new_value)
 
-    puts 'Last name successfully edit.'
+    puts "#{header} successfully edit."
   end
 
   def fire(last_name)
-    deleter(last_name)
+    csv_delete(last_name)
 
     puts 'Employee fired'
   end

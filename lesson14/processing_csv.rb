@@ -20,19 +20,19 @@ module ProcessingCSV
     data
   end
 
-  def reader
+  def csv_read
     processed_data.each do |employee|
       puts employee
     end
   end
 
-  def writer(new_value)
+  def csv_write(new_value)
     CSV.open(file_name, 'a', headers: true) do |csv|
       csv << new_value
     end
   end
 
-  def deleter(last_name)
+  def csv_delete(last_name)
     table = CSV.table(file_name)
 
     table.delete_if do |row|
@@ -44,7 +44,7 @@ module ProcessingCSV
     end
   end
 
-  def editor(header, last_name, new_value)
+  def csv_edit(header, last_name, new_value)
     write_parameters = {
       write_headers: true,
       headers: CSV_HEADERS
