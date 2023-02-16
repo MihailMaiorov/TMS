@@ -32,7 +32,12 @@ class Engine
       puts @employee.calculate_salary
     when 5
       exit
+    else
+      raise WrongOptionSelect
     end
+  rescue WrongOptionSelect => e
+    puts e.message
+    retry
   end
 
   def sort_level
@@ -54,13 +59,16 @@ class Engine
       when 6
         :experience
       when 7
-        :intro_level
+        return intro_level
+      else
+        raise WrongOptionSelect
       end
-
-    return intro_level if sort_param == :intro_level
 
     puts @sorter.sorter(sort_param)
     select_level
+  rescue WrongOptionSelect => e
+    puts e.message
+    retry
   end
 
   def select_level
@@ -75,7 +83,12 @@ class Engine
       profile_level
     when 2
       sort_level
+    else
+      raise WrongOptionSelectError
     end
+  rescue WrongOptionSelectError => e
+    puts e.message
+    retry
   end
 
   def profile_level
@@ -91,7 +104,12 @@ class Engine
       intro_level
     when 3
       select_level
+    else
+      raise WrongOptionSelectError
     end
+  rescue WrongOptionSelectError => e
+    puts e.message
+    retry
   end
 
   def edit_level
@@ -125,6 +143,14 @@ class Engine
 
   def runner
     puts 'You launched the payroll application. v.1.0'
-    intro_level
+    loop do
+      intro_level
+    end
+  end
+
+  class WrongOptionSelectError < StandardError
+    def initialize(message = 'Incorrect option select')
+      super(message)
+    end
   end
 end
