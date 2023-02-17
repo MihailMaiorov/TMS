@@ -8,19 +8,33 @@ class Employee
     processed_data.each { |employee| employee[:salary] = employee[:rate] * employee[:hours_worked] }
   end
 
-  def add
-    csv_write(user_input)
+  def create
+    csv_write(new_data)
+  end
 
-    puts 'New employee successfully added'
+  def fire(last_name)
+    csv_delete(last_name)
+
+    puts 'Employee fired'
+  end
+
+  def update(employee, header)
+    param = header.to_s.gsub(/_/, ' ')
+    print "Enter new #{param}: "
+    new_value = gets.strip
+
+    csv_edit(header, employee[:last_name], new_value)
+
+    puts "#{param} successfully edit."
   end
 
   private
 
-  def user_input
-    print 'Enter name: '
-    name = gets.strip.capitalize
-    print 'Enter surname: '
-    surname = gets.strip.capitalize
+  def new_data
+    print 'Enter first name: '
+    first_name = gets.strip.capitalize
+    print 'Enter second name: '
+    second_name = gets.strip.capitalize
     print 'Enter job position: '
     job_position = gets.strip.downcase
     print 'Enter rate: '
@@ -29,6 +43,6 @@ class Employee
     hours_worked = gets.to_i
     print 'Enter experience: '
     experience = gets.to_i
-    [name, surname, job_position, rate, hours_worked, experience]
+    [first_name, second_name, job_position, rate, hours_worked, experience]
   end
 end

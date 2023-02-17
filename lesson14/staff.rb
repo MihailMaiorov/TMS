@@ -1,7 +1,7 @@
 require 'csv'
 require_relative 'processing_csv'
 
-class Selector
+class Staff
   include ProcessingCSV
 
   attr_accessor :employee
@@ -25,6 +25,10 @@ class Selector
 
   def selector(&block)
     processed_data.select(&block)
+  end
+
+  def sort_by_params(param)
+    processed_data.sort_by { |employee| employee[param] }
   end
 
   class WrongLastNameError < StandardError

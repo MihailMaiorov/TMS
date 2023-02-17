@@ -1,18 +1,14 @@
 require 'csv'
 require_relative 'processing_csv'
-require_relative 'sorter'
-require_relative 'selector'
+require_relative 'staff'
 require_relative 'employee'
-require_relative 'editor'
 
 class Engine
   include ProcessingCSV
 
   def initialize
-    @sorter = Sorter.new
-    @selector = Selector.new
+    @staff = Staff.new
     @employee = Employee.new
-    @editor = Editor.new
   end
 
   def intro_level
@@ -27,7 +23,9 @@ class Engine
     when 2
       sort_level
     when 3
-      @employee.add
+      @employee.create
+
+      puts 'New employee successfully added'
     when 4
       puts @employee.calculate_salary
     when 5
@@ -64,7 +62,7 @@ class Engine
         raise WrongOptionSelectError
       end
 
-    puts @sorter.sorter(sort_param)
+    puts @staff.sort_by_params(sort_param)
     select_level
   rescue WrongOptionSelectError => e
     puts e.message
@@ -78,8 +76,8 @@ class Engine
 
     case user_input
     when 1
-      @selector.select_by_last_name
-      puts @selector.employee
+      @staff.select_by_last_name
+      puts @staff.employee
       profile_level
     when 2
       sort_level
@@ -92,15 +90,15 @@ class Engine
   end
 
   def profile_level
-    puts '1. edit employee, 2. fire employee, 3. Back'
+    puts '1. update employee data , 2. fire employee, 3. Back'
 
     user_input = gets.to_i
 
     case user_input
     when 1
-      edit_level
+      update_level
     when 2
-      @editor.fire(@selector.employee[:last_name])
+      @employee.fire(@staff.employee[:last_name])
       intro_level
     when 3
       select_level
@@ -112,12 +110,12 @@ class Engine
     retry
   end
 
-  def edit_level
+  def update_level
     puts 'What to edit?(1. first name, 2. last name, 3. job position, 4. rate, 5. hours worked, 6. experience, 7. Back)'
 
     user_input = gets.to_i
 
-    edit_param =
+    header =
       case user_input
       when 1
         :first_name
@@ -137,7 +135,7 @@ class Engine
         raise WrongOptionSelectError
       end
 
-    @editor.edit(@selector.employee, edit_param)
+    @employee.update(@staff.employee, header)
     profile_level
 
   rescue WrongOptionSelectError => e
