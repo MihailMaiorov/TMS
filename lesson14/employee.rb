@@ -23,7 +23,7 @@ class Employee
     print "Enter new #{param}: "
     new_value = gets.strip
 
-    csv_edit(header, employee[:last_name], new_value)
+    csv_update(header, employee[:last_name], new_value)
 
     puts "#{param} successfully edit."
   end
@@ -38,7 +38,7 @@ class Employee
     print 'Enter job position: '
     job_position = gets.strip.downcase
     print 'Enter rate: '
-    rate = gets.to_i
+    rate = gets.to_f
     print 'Enter hours worked: '
     hours_worked = gets.to_i
     print 'Enter experience: '

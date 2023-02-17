@@ -3,11 +3,22 @@ require 'fileutils'
 module ProcessingCSV
   CSV_HEADERS = %w[first_name last_name job_position rate hours_worked experience].freeze
 
+  WRITE_PARAMETERS = {
+    write_headers: true,
+    headers: CSV_HEADERS
+  }.freeze
+
+  READ_PARAMETERS = {
+    encoding: 'UTF-8',
+    headers: true,
+    header_converters: :symbol,
+    converters: :all
+  }.freeze
+
   def processed_data
-    raw_data = CSV.parse(File.read(file_name), headers: true, header_converters: :symbol, converters: :all)
     data = []
 
-    raw_data.each do |row|
+    csv_pars.each do |row|
       data << {
         first_name: row[:first_name],
         last_name: row[:last_name],
@@ -21,8 +32,8 @@ module ProcessingCSV
   end
 
   def csv_read
-    processed_data.each do |employee|
-      puts employee
+    CSV.foreach(file_name) do |row|
+      puts row.join(', ')
     end
   end
 
@@ -44,20 +55,9 @@ module ProcessingCSV
     end
   end
 
-  def csv_edit(header, last_name, new_value)
-    write_parameters = {
-      write_headers: true,
-      headers: CSV_HEADERS
-    }
-    read_parameters = {
-      encoding: 'UTF-8',
-      headers: true,
-      header_converters: :symbol,
-      converters: :all
-    }
-
-    CSV.open('new_data.csv', 'w+', **write_parameters) do |new_csv|
-      CSV.foreach(file_name, **read_parameters) do |row|
+  def csv_update(header, last_name, new_value)
+    CSV.open('new_data.csv', 'w+', **WRITE_PARAMETERS) do |new_csv|
+      CSV.foreach(file_name, **READ_PARAMETERS) do |row|
         row[header] = new_value if row[:last_name] == last_name
         new_csv << row
       end
@@ -70,5 +70,9 @@ module ProcessingCSV
 
   def file_name
     'staff.csv'
+  end
+
+  def csv_pars
+    CSV.parse(File.read(file_name), **READ_PARAMETERS)
   end
 end

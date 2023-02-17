@@ -11,24 +11,26 @@ class Staff
   end
 
   def select_by_last_name
-    print 'Select an employee by last name: '
+    print "Enter the employee's last name: "
     last_name = gets.strip.downcase
     last_names = processed_data.map { |row| row[:last_name].downcase }
 
     raise WrongLastNameError unless last_names.include?(last_name)
 
-    @employee = selector { |row| row[:last_name].downcase == last_name }.first
+    selector(last_name)
   rescue WrongLastNameError => e
     puts e.message
     retry
   end
 
-  def selector(&block)
-    processed_data.select(&block)
-  end
-
   def sort_by_params(param)
     processed_data.sort_by { |employee| employee[param] }
+  end
+
+  private
+
+  def selector(last_name)
+    @employee = processed_data.select { |row| row[:last_name].downcase == last_name }.first
   end
 
   class WrongLastNameError < StandardError

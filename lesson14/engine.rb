@@ -11,6 +11,15 @@ class Engine
     @employee = Employee.new
   end
 
+  def runner
+    puts 'You launched the payroll application. v.1.0'
+    loop do
+      intro_level
+    end
+  end
+
+  private
+
   def intro_level
     puts '1. Show all employees, 2. Sort employees, 3. Add employee, 4. Calculate salary, 5. Quit'
     puts 'Enter a number(1, 2, 3, 4, 5)'
@@ -39,7 +48,7 @@ class Engine
   end
 
   def sort_level
-    puts 'How to sort?(1. first name, 2. last name, 3. job position, 4. rate, 5. hours worked, 6. experience, 7. Back)'
+    puts 'How to sort?(1. First name, 2. Last name, 3. Job position, 4. Rate, 5. Hours worked, 6. Experience, 7. Back)'
 
     user_input = gets.to_i
     sort_param =
@@ -70,7 +79,7 @@ class Engine
   end
 
   def select_level
-    puts '1. select employeer, 2. Back'
+    puts '1. Select employeer, 2. Back'
 
     user_input = gets.to_i
 
@@ -90,7 +99,7 @@ class Engine
   end
 
   def profile_level
-    puts '1. update employee data , 2. fire employee, 3. Back'
+    puts '1. Update employee data , 2. Fire employee, 3. Back'
 
     user_input = gets.to_i
 
@@ -111,7 +120,7 @@ class Engine
   end
 
   def update_level
-    puts 'What to edit?(1. first name, 2. last name, 3. job position, 4. rate, 5. hours worked, 6. experience, 7. Back)'
+    puts 'What to edit?(1. First name, 2. Last name, 3. Job position, 4. Rate, 5. Hours worked, 6. Experience, 7. Back)'
 
     user_input = gets.to_i
 
@@ -137,17 +146,9 @@ class Engine
 
     @employee.update(@staff.employee, header)
     profile_level
-
   rescue WrongOptionSelectError => e
     puts e.message
     retry
-  end
-
-  def runner
-    puts 'You launched the payroll application. v.1.0'
-    loop do
-      intro_level
-    end
   end
 
   class WrongOptionSelectError < StandardError
