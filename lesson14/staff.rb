@@ -27,6 +27,10 @@ class Staff
     processed_data.sort_by { |employee| employee[param] }
   end
 
+  def info
+    csv_read
+  end
+
   private
 
   def selector(last_name)

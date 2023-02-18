@@ -1,11 +1,7 @@
-require 'csv'
-require_relative 'processing_csv'
 require_relative 'staff'
 require_relative 'employee'
 
 class Engine
-  include ProcessingCSV
-
   def initialize
     @staff = Staff.new
     @employee = Employee.new
@@ -28,7 +24,7 @@ class Engine
 
     case user_input
     when 1
-      Engine.new.csv_read
+      @staff.info
     when 2
       sort_level
     when 3
