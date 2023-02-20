@@ -16,15 +16,8 @@ module MyAccessMethods
   end
 
   def my_attr_accessor(*args)
-    args.each do |name|
-      define_method(name) do
-        instance_variable_get("@#{name}")
-      end
-
-      define_method("#{name}=") do |value|
-        instance_variable_set("@#{name}", value)
-      end
-    end
+    my_attr_reader(*args)
+    my_attr_writer(*args)
   end
 end
 
