@@ -15,7 +15,7 @@ class Staff
     last_name = gets.strip.downcase
     last_names = processed_data.map { |row| row[:last_name].downcase }
 
-    raise WrongLastNameError unless last_names.include?(last_name)
+    raise WrongLastNameError, 'Incorrect last name select' unless last_names.include?(last_name)
 
     selector(last_name)
   rescue WrongLastNameError => e
@@ -37,9 +37,5 @@ class Staff
     @employee = processed_data.select { |row| row[:last_name].downcase == last_name }.first
   end
 
-  class WrongLastNameError < StandardError
-    def initialize(message = 'Incorrect last name select')
-      super(message)
-    end
-  end
+  class WrongLastNameError < StandardError; end
 end
