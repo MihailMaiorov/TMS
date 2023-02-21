@@ -1,3 +1,4 @@
+require 'csv'
 require 'fileutils'
 
 module ProcessingCSV

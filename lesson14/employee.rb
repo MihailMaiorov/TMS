@@ -1,4 +1,3 @@
-require 'csv'
 require_relative 'processing_csv'
 
 class Employee
