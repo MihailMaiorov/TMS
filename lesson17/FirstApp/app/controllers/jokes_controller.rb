@@ -1,5 +1,3 @@
-require 'curb'
-
 class JokesController < ApplicationController
   HOST = 'https://api.chucknorris.io'.freeze
   CATEGORIES_PATH = '/jokes/categories'.freeze
