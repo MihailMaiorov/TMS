@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
-  get '/jokes', to: 'jokes#random'
+  get '/jokes/categories', to: 'jokes#categories'
 
-  get '/jokes/chuck', to: 'jokes#chuck'
+  get '/jokes/random', to: 'jokes#random'
 
   root 'pages#index'
 end

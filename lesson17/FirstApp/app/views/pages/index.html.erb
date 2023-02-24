@@ -1,7 +1,5 @@
-<h1>FirstApp<h1>
+<h1><%= @name %>, welcom to Chuck Norris jokes<h1>
 
-<p>Welcom</p>
+<p><%= link_to 'Joke categories', jokes_categories_path %></p>
 
-<footer>
-  &copy; @Mihail <%= Time.now.year %>
-</footer>
+&copy; @Mihail <%= Time.now.year %>
