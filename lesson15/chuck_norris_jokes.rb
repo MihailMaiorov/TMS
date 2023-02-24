@@ -6,17 +6,19 @@ class ChuckNorrisJokes
 
   HOST = 'https://api.chucknorris.io'.freeze
   CATEGORIES_PATH = '/jokes/categories'.freeze
-  JOKES_PATH = '/jokes/random?category='.freeze
+  JOKE_FROM_CATEGORY_PATH = '/jokes/random?category='.freeze
 
   class << self
-    def call_categories
+    def call_joke_from_category
+      puts 'Choose category:'
       make_categories_request.each_with_index { |category, index| puts "#{index + 1} - #{category}" }
-    end
 
-    def call_joke(user_input)
-      make_joke_request(user_input)['value']
+      user_input = gets.to_i - 1
+      raise WrongCategoryError, 'Wrong category number' unless (0...make_categories_request.size).include?(user_input)
+
+      make_joke_from_category_request(user_input)['value']
     rescue WrongCategoryError => e
-      e.message
+      puts e.message
     end
 
     private
@@ -26,11 +28,9 @@ class ChuckNorrisJokes
       JSON(categories_request.body)
     end
 
-    def make_joke_request(user_input)
-      raise WrongCategoryError, 'Wrong category number' unless (0...make_categories_request.size).include?(user_input)
-
+    def make_joke_from_category_request(user_input)
       user_choose = make_categories_request[user_input]
-      joke_request = Curl.get(joke_url(user_choose))
+      joke_request = Curl.get(joke_from_category_url(user_choose))
       JSON(joke_request.body)
     end
 
@@ -38,17 +38,8 @@ class ChuckNorrisJokes
       File.join(HOST, CATEGORIES_PATH)
     end
 
-    def joke_url(user_choose)
-      File.join(HOST, JOKES_PATH + user_choose)
+    def joke_from_category_url(user_choose)
+      File.join(HOST, JOKE_FROM_CATEGORY_PATH + user_choose)
     end
   end
-end
-
-loop do
-  puts 'Choose category:'
-  ChuckNorrisJokes.call_categories
-
-  user_input = gets.to_i - 1
-
-  puts ChuckNorrisJokes.call_joke(user_input)
 end
