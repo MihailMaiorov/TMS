@@ -2,6 +2,19 @@
 
 <p><%= link_to 'Random joke', jokes_random_path %></p>
 <p><%= link_to 'Joke categories', jokes_categories_path %></p>
-<p><%= link_to 'Joke search', jokes_search_path %></p>
+
+<h2>Free text search<h2>
+
+<p>
+  <form action="jokes/search">
+    <input
+      type="search"
+      name="query"
+      placeholder="query"
+      minlength="3"
+      maxlength="120" />
+    <button>Search</button>
+  </form>
+</p>
 
 &copy; @Mihail <%= Time.now.year %>

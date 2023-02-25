@@ -1,4 +1,6 @@
 class JokesController < ApplicationController
+  class BadJokeRequest < StandardError; end
+
   HOST = 'https://api.chucknorris.io'.freeze
   CATEGORIES_PATH = '/jokes/categories'.freeze
   RANDOM_JOKE_PATH = '/jokes/random'.freeze
@@ -9,16 +11,21 @@ class JokesController < ApplicationController
     @category = params[:category]
 
     @random_jokes = make_joke_request(@category)['value']
+  rescue BadJokeRequest => e
+    render json: e.message
   end
 
   def categories
-    @categories = make_categories_request
+    @categories_result = make_categories_request
   end
 
   def search
-    @text = params[:query]
+    @query = params[:query]
+    raise BadJokeRequest, 'Unknown path' if @query.nil?
 
-    @search = make_search_request(@text) unless @text.nil?
+    @search_result = make_search_request(@query)
+  rescue BadJokeRequest => e
+    render json: e.message
   end
 
   private
@@ -30,12 +37,18 @@ class JokesController < ApplicationController
 
   def make_joke_request(category)
     joke_request = Curl.get(joke_url(category))
-    JSON(joke_request.body)
+    result = JSON(joke_request.body)
+    raise BadJokeRequest, error_message(result) if joke_request.status >= '400'
+
+    result
   end
 
-  def make_search_request(text)
-    joke_request = Curl.get(search_url(text))
-    JSON(joke_request.body)
+  def make_search_request(query)
+    joke_request = Curl.get(search_url(query))
+    result = JSON(joke_request.body)
+    raise BadJokeRequest, error_message(result) if joke_request.status >= '400'
+
+    result
   end
 
   def categories_url
@@ -50,7 +63,11 @@ class JokesController < ApplicationController
     end
   end
 
-  def search_url(text)
-    File.join(HOST, SEARCH_PATH + text)
+  def search_url(query)
+    File.join(HOST, SEARCH_PATH + query)
+  end
+
+  def error_message(response)
+    response['message'] || 'Unknown Error'
   end
 end

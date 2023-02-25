@@ -1,12 +1,19 @@
 <h1>Free text search<h1>
 
-<form  action="search">
+<form action="search">
   <input
     type="search"
     name="query"
-    placeholder="text"
-    minlength="3" />
+    placeholder="query"
+    minlength="3"
+    maxlength="120" />
   <button>Search</button>
 </form>
 
-<h4><%= @search %><h4>
+<h2>Jokes that include <%= "'#{@query}'" %></h2>
+
+<h4>Total find: <%= @search_result['total'] %><h4>
+
+<% @search_result['result'].each do |joke| %>
+  <h4><%= joke['value'] %><h4>
+<%end%>

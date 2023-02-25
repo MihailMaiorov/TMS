@@ -1,5 +1,5 @@
 <h1>Choose catigories<h1>
 
-<% @categories.each do |category| %>
+<% @categories_result.each do |category| %>
   <%= link_to category, jokes_random_path(:category => "#{category}") %> |
 <% end %>
