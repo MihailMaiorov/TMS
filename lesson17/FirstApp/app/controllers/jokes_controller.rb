@@ -8,7 +8,7 @@ class JokesController < ApplicationController
   def random
     @category = params[:category]
 
-    @random_jokes = make_joke_from_category_request(@category)['value']
+    @random_jokes = make_joke_request(@category)['value']
   end
 
   def categories
@@ -16,9 +16,9 @@ class JokesController < ApplicationController
   end
 
   def search
-    # @text = params[:search]
-    @text = 'tracks'
-    @search = make_search_request(@text)
+    @text = params[:query]
+
+    @search = make_search_request(@text) unless @text.nil?
   end
 
   private
@@ -28,7 +28,7 @@ class JokesController < ApplicationController
     JSON(categories_request.body)
   end
 
-  def make_joke_from_category_request(category)
+  def make_joke_request(category)
     joke_request = Curl.get(joke_url(category))
     JSON(joke_request.body)
   end

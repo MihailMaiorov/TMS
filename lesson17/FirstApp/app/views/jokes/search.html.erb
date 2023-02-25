@@ -1,4 +1,12 @@
-<h1>Search result<h1>
+<h1>Free text search<h1>
 
-<p><%= @search %></p>
+<form  action="search">
+  <input
+    type="search"
+    name="query"
+    placeholder="text"
+    minlength="3" />
+  <button>Search</button>
+</form>
 
+<h4><%= @search %><h4>
