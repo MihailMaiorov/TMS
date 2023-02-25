@@ -9,6 +9,8 @@ class Employee
 
   def create
     csv_write(new_data)
+
+    puts 'New employee successfully added'
   end
 
   def fire(last_name)
