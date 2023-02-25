@@ -8,6 +8,10 @@ gem 'rails', '~> 7.0.4', '>= 7.0.4.2'
 
 gem 'curb', '~> 0.9.3'
 
+gem 'rubocop', '~> 1.46', require: false
+
+gem 'solargraph', group: :development
+
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem 'sprockets-rails'
 
