@@ -1,0 +1,20 @@
+<h1><%= @name %>, welcom to Chuck Norris jokes<h1>
+
+<h2><%= link_to 'Random joke', jokes_random_path %></h2>
+<h2><%= link_to 'Joke categories', jokes_categories_path %></h2>
+
+<h2>Free text search<h2>
+
+<p>
+  <form action="jokes/search">
+    <input
+      type="search"
+      name="query"
+      placeholder="query"
+      minlength="3"
+      maxlength="120" />
+    <button>Search</button>
+  </form>
+</p>
+
+&copy; @Mihail <%= Time.now.year %>
