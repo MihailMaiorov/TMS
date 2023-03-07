@@ -4,9 +4,9 @@ class JokesController < ApplicationController
   def random
     category = params[:category]
 
-    @random_jokes = make_joke_request(@category)['body']
+    @random_jokes = make_joke_request(category)
 
-    render json: @random_jokes
+    render json: @random_jokes['body']
   rescue BadJokeRequest => e
     render json: e.message
   end
@@ -18,11 +18,10 @@ class JokesController < ApplicationController
   end
 
   def search
-    raise BadJokeRequest, 'Query must be minimum 3 letters' unless params[:query].presence || params[:query].size > 2
+    query = params[:query]
 
-    search_request = Joke.where("text LIKE ?", "%#{params[:query]}%")
-    @result = { 'total' => search_request.size, 'result' => search_request }
-    
+    @result = make_search_request(query)
+
     render json: @result
   rescue BadJokeRequest => e
     render json: e.message
@@ -31,11 +30,19 @@ class JokesController < ApplicationController
   private
 
   def make_joke_request(category)
-    return Joke.find(Joke.ids.sample) unless category.presence
+    return Joke.find(Joke.ids.sample) if category.nil?
 
     choosed_category = Category.where(title: category)
     raise BadJokeRequest, 'Wrong category' if choosed_category.empty?
 
     Joke.where(category_id: choosed_category).sample
+  end
+
+  def make_search_request(query)
+    raise BadJokeRequest, 'Query must be minimum 3 letters' if query.nil? || query.size < 3
+
+    search_request = Joke.where('body LIKE ?', "%#{query}%")
+
+    { 'total' => search_request.size, 'result' => search_request }
   end
 end
