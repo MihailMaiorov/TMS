@@ -10,15 +10,13 @@ class User < ApplicationRecord
   validates :first_name, :last_name, presence: true
 
   validates :email, confirmation: true, uniqueness: true
-  validates :email_confirmation, presence: true
 
   validates :password, confirmation: true,
                        length: { is: 8 },
                        format: { with: /\A(?=.*[a-z])(?=.*[A-Z])(?=.*[!#%;№])[a-zA-Z!№;%]{8}\z/,
                                  message: 'Incorrect password' }
-  validates :password_confirmation, presence: true
-  # validates_confirmation_of :password
-  # scope :confirmed, where(confirmed: true)
+
+  scope :confirmed_all, -> { where(confirmed: true) }
 
   scope :created_between, ->(from, to) { where('created_at >= ? AND created_at <= ?', from, to) }
 end
