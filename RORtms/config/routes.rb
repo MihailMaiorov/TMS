@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :comments, except: :destroy
+
   get '/jokes/categories', to: 'jokes#categories'
 
   get '/jokes/random', to: 'jokes#random'

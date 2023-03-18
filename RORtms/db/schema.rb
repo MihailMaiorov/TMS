@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_13_004354) do
-
+ActiveRecord::Schema[7.0].define(version: 2023_03_18_143323) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -49,6 +48,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_13_004354) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "comments", force: :cascade do |t|
+    t.string "title"
+    t.text "message"
+    t.integer "customer_id"
+    t.integer "book_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["customer_id", "book_id"], name: "index_comments_on_customer_id_and_book_id", unique: true
+  end
+
   create_table "customers", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
@@ -65,6 +74,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_13_004354) do
     t.bigint "category_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["body"], name: "index_jokes_on_body"
+    t.index ["category_id"], name: "index_jokes_on_category_id", using: :hash
   end
 
   create_table "orders", force: :cascade do |t|
@@ -105,7 +116,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_13_004354) do
     t.string "first_name", null: false
     t.string "last_name", null: false
     t.boolean "confirmed", default: false, null: false
-
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

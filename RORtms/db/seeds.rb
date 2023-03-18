@@ -14,7 +14,7 @@
 # JSON(categories_request.body).each do |category_name|
 #   category = Category.create(title: category_name)
 
-#   100.times { Joke.create(body: JSON(Curl.get(JOKE_PATH + category_name).body)['value'], category_id: category.id) }
+#   10000.times { Joke.create(body: 'fdgdfg', category_id: category.id) }
 # end
 
 20.times do

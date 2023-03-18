@@ -2,11 +2,9 @@ class JokesController < ApplicationController
   class BadJokeRequest < StandardError; end
 
   def random
-    category = params[:category]
+    @random_joke = make_random_joke_request
 
-    @random_jokes = make_joke_request(category)
-
-    render json: @random_jokes['body']
+    render json: @random_joke
   rescue BadJokeRequest => e
     render json: e.message
   end
@@ -18,31 +16,24 @@ class JokesController < ApplicationController
   end
 
   def search
-    query = params[:query]
+    @search_request = make_search_request
 
-    @result = make_search_request(query)
-
-    render json: @result
+    render json: @search_request
   rescue BadJokeRequest => e
     render json: e.message
   end
 
   private
 
-  def make_joke_request(category)
-    return Joke.find(Joke.ids.sample) if category.nil?
-
-    choosed_category = Category.where(title: category)
-    raise BadJokeRequest, 'Wrong category' if choosed_category.empty?
-
-    Joke.where(category_id: choosed_category).sample
+  def make_random_joke_request
+    joke = Joke
+    joke = joke.where(category_id: Category.where(title: params[:category])) if params[:category]
+    joke = joke.order('RANDOM()').first
   end
 
-  def make_search_request(query)
-    raise BadJokeRequest, 'Query must be minimum 3 letters' if query.nil? || query.size < 3
+  def make_search_request
+    raise BadJokeRequest, 'Query must be minimum 3 letters' if params[:query].nil? || params[:query].size < 3
 
-    search_request = Joke.where('body LIKE ?', "%#{query}%")
-
-    { 'total' => search_request.size, 'result' => search_request }
+    Joke.where('body LIKE ?', "%#{params[:query]}%")
   end
 end
