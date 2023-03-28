@@ -7,8 +7,8 @@ class CreateBooks < ActiveRecord::Migration[7.0]
       t.decimal :price
       t.boolean :out_of_print
       t.integer :views
-      t.references :supplier, index: true, foriegn_key: true
-      t.references :author, index: true, foriegn_key: true
+      t.references :supplier, foreign_key: true
+      t.references :author, foreign_key: true
 
       t.timestamps
     end

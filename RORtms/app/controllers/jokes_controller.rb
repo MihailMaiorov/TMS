@@ -34,6 +34,8 @@ class JokesController < ApplicationController
   def make_search_request
     raise BadJokeRequest, 'Query must be minimum 3 letters' if params[:query].nil? || params[:query].size < 3
 
-    Joke.where('body LIKE ?', "%#{params[:query]}%")
+    search_request = Joke.where('body LIKE ?', "%#{params[:query]}%")
+
+    { 'total' => search_request.size, 'result' => search_request }
   end
 end
