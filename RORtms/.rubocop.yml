@@ -9,3 +9,10 @@ Metrics/MethodLength:
 
 Metrics/ClassLength:
   Enabled: false
+
+Metrics/BlockLength:
+  IgnoredMethods: ['describe', 'context']
+
+AllCops:
+  Exclude:
+    - 'db/schema.rb'

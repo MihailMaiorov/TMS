@@ -8,4 +8,6 @@ Rails.application.routes.draw do
   get '/jokes/search', to: 'jokes#search'
 
   root 'pages#index'
+
+  resources :books, only: :index
 end
