@@ -29,7 +29,7 @@ module Currencies
       end
 
       def rate_from_api(pair:)
-        response_body = DataFromAPI.current_pair(params: { pairs: pair })
+        response_body = Requester.call(params: { pairs: pair })
         raise BadParams, response_body[MESSAGE] unless response_body[STATUS] == 200
 
         response_body.dig(ALL_RATES, pair, RATE)

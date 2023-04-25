@@ -8,7 +8,7 @@ class CurrencyPairsController < ApplicationController
   end
 
   def show
-    render json: Currencies::DataFromAPI.pairs_list
+    render json: Currencies::Requester.call
   end
 
   def convert

@@ -1,5 +1,5 @@
 module Currencies
-  class DataFromAPI
+  class Requester
     class ServiceUnavailable < StandardError; end
 
     HOST = 'https://www.freeforexapi.com/'.freeze
@@ -7,18 +7,16 @@ module Currencies
     SUPPORTED_PAIRS = 'supportedPairs'.freeze
 
     class << self
-      def pairs_list
-        make_request(path: PAIRS_LIST_PATH)[SUPPORTED_PAIRS]
-      end
+      def call(params: {})
+        return make_request(params:) unless params
 
-      def current_pair(params: {})
-        make_request(path: PAIRS_LIST_PATH, params:)
+        make_request[SUPPORTED_PAIRS]
       end
 
       private
 
-      def make_request(path:, params: {})
-        request = Curl.urlalize(File.join(HOST, path), params)
+      def make_request(params: {})
+        request = Curl.urlalize(File.join(HOST, PAIRS_LIST_PATH), params)
         response = Curl.get(request)
 
         raise ServiceUnavailable unless response.response_code == 200
