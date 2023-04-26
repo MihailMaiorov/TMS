@@ -8,7 +8,7 @@ module Currencies
 
     class << self
       def call(params: {})
-        return make_request(params:) unless params
+        return make_request(params:) if params.present?
 
         make_request[SUPPORTED_PAIRS]
       end

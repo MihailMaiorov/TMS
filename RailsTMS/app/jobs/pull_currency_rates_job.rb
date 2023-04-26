@@ -5,12 +5,12 @@ class PullCurrencyRatesJob
   RATE = 'rate'.freeze
 
   def perform
-    all_pairs = Currencies::DataFromAPI.pairs_list
+    all_pairs = Currencies::Requester.call
 
     data_to_insert = []
 
     all_pairs.each do |pair|
-      current_pair = Currencies::DataFromAPI.current_pair(params: { pairs: pair })
+      current_pair = Currencies::Requester.call(params: { pairs: pair })
 
       rate = current_pair.dig(ALL_RATES, pair, RATE)
 

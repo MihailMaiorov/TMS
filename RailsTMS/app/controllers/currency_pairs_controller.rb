@@ -1,5 +1,5 @@
 class CurrencyPairsController < ApplicationController
-  rescue_from Currencies::DataFromAPI::ServiceUnavailable do
+  rescue_from Currencies::Requester::ServiceUnavailable do
     render json: { errors: 'Service unavailable' }, status: :service_unavailable
   end
 
